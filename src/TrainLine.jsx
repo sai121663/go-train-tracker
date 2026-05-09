@@ -259,15 +259,12 @@ if (!stations.length) {
             marginBottom: 8,
             display: "flex",
             flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
             gap: 6
           }}>
             
-            {/* Header + "LIVE" badge */}
-            <div style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between"
-            }}>
+            {/* Header */}
 
               <span style={{ 
                 fontSize: 14, 
@@ -276,12 +273,7 @@ if (!stations.length) {
               }}>
                   🚆  {trainData.firstStation?.name} → {trainData.lastStation?.name}
               </span>
-                
-              <span style={{ fontSize: 10, background: "#EAF3DE", color: "#3B6D11", borderRadius: 999, padding: "2px 8px", letterSpacing: "0.06em" }}>
-                LIVE
-              </span>
 
-            </div>
 
             {/* Previous + Next Station */}
             <div style={{fontSize: 11, color: "#333"}}>
@@ -298,22 +290,38 @@ if (!stations.length) {
               Arrives: <strong> {trainData.nextStation?.arrival_time?.toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"})} </strong>
             </div>
 
-            {/* Progress Bar with %  */}
-            <div> 
+            {/* "LIVE" badge */}
+            <span style={{ 
+                  fontSize: 10, 
+                  background: "#EAF3DE", 
+                  color: "#3B6D11", 
+                  borderRadius: 999, 
+                  padding: "2px 8px", 
+                  letterSpacing: "0.06em",
+                  marginBottom: 6 
+            }}>
+              LIVE
+            </span>
 
-              <div style={{
-                display: "flex",
-                justifyContent: "space-between",
-                fontSize: 12,
-                color: "black",
-                marginBottom: 3
+            {/* Progress Bar + "LIVE" badge  */}
+            <div style={{width: "100%"}}> 
+
+              
+                
+              <div style={{ 
+                height: 4, 
+                width: "100%", 
+                background: "#e5e5e5", 
+                borderRadius: 999, 
+                overflow: "hidden" 
               }}>
-                <span> </span>
-                <span> {Math.round(trainData.progress * 100)}% </span>
-              </div>
+                <div style={{ 
+                  width: `${trainData.progress * 100}%`, 
+                  height: "100%", 
+                  background: "#1D9E75", 
+                  borderRadius: 999 
+                }} />
 
-              <div style={{ height: 4, width: "100%", background: "#e5e5e5", borderRadius: 999, overflow: "hidden" }}>
-                <div style={{ width: `${trainData.progress * 100}%`, height: "100%", background: "#1D9E75", borderRadius: 999 }} />
               </div>
               
           
