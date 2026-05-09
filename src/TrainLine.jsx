@@ -12,7 +12,7 @@ const stopTimes = await response.json();
 import {buildTrip, preprocessTrips, baseStations} from "./logic/buildTrip";
 
 
-import "./app.css"
+import "./App.css"
 
 function TrainLine() {
 
@@ -306,7 +306,6 @@ if (!stations.length) {
             {/* Progress Bar + "LIVE" badge  */}
             <div style={{width: "100%"}}> 
 
-              
                 
               <div style={{ 
                 height: 4, 
@@ -327,7 +326,6 @@ if (!stations.length) {
           
             </div>
 
-            
 
           </div>
         );
@@ -573,8 +571,6 @@ if (!stations.length) {
       </div>
 
   </div>
-    
-
 
 </>
 )}
