@@ -460,7 +460,7 @@ if (!stations.length) {
     padding: "20px"
   }}>
 
-    <div style={{ fontSize: 40, fontWeight: 500, marginBottom: 4 }}>
+    <div style={{ color: "white", fontSize: 40, fontWeight: 500, marginBottom: 4 }}>
       🚆 Kitchener Line
     </div>
 
