@@ -35,10 +35,6 @@ export function preprocessTrips(trips, stopTimesByTrip, stopsById, route_id) {
       .map(cd => cd.service_id)
   );
 
-  console.log("currentDayOfWeek", currentDayOfWeek);
-  console.log("matchingServiceIds", matchingServiceIds);
-  console.log("sample trip service_id", trips[0]?.service_id);
-
   const seen = new Set();
   
   return trips
@@ -90,8 +86,6 @@ export function preprocessTrips(trips, stopTimesByTrip, stopsById, route_id) {
 
 export function buildTrip(tripID, stopTimesByTrip, stopsById, baseStationsByName) {
     
-    console.log("buildTrip has been called");
-
     const tripStops = stopTimesByTrip.get(tripID) || [];
 
 
@@ -115,8 +109,6 @@ export function buildTrip(tripID, stopTimesByTrip, stopsById, baseStationsByName
     .filter(Boolean);
 
 }
-
-
 
 function convertToDateObject(timeString) {
   const [h, m, s] = timeString.split(":");

@@ -2,8 +2,6 @@ import kitchenerLine from "./assets/Kitchener-Line.png"
 import {useEffect, useState, useMemo, useRef} from "react"
 import {interpolatePosition} from "./logic/logic.js"
 
-import {useTrainData} from "./hooks/useTrainData.js";
-
 import stops from "./data/JSON_GO_GTFS/stops.json";
 import trips from "./data/JSON_GO_GTFS/trips.json";
 
@@ -240,8 +238,8 @@ if (!stations.length) {
             paddingRight: "28px"
           }}
         >
-          <option value="0">FROM Union</option>
-          <option value="1">TO Union</option>
+          <option value="0">Kitchener</option>
+          <option value="1">Union</option>
         </select>
       </div>
 
@@ -261,39 +259,73 @@ if (!stations.length) {
             marginBottom: 8,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            textAlign: "center",
-            whiteSpace: "nowrap"
+            gap: 6
           }}>
-            <span style={{ 
-              fontSize: 14, 
-              color: "black", 
-              fontWeight: 500 
-            }}>
-                🚆  {trainData.firstStation?.name} → {trainData.lastStation?.name}
-            </span>
-              
-            <span style={{ fontSize: 10, background: "#EAF3DE", color: "#3B6D11", borderRadius: 999, padding: "2px 8px", letterSpacing: "0.06em" }}>
-              LIVE
-            </span>
             
-            <div style={{ fontSize: 13, color: "#555", marginBottom: 2 }}>
-              Next: {trainData.nextStation?.name}
+            {/* Header + "LIVE" badge */}
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between"
+            }}>
+
+              <span style={{ 
+                fontSize: 14, 
+                color: "black", 
+                fontWeight: 500 
+              }}>
+                  🚆  {trainData.firstStation?.name} → {trainData.lastStation?.name}
+              </span>
+                
+              <span style={{ fontSize: 10, background: "#EAF3DE", color: "#3B6D11", borderRadius: 999, padding: "2px 8px", letterSpacing: "0.06em" }}>
+                LIVE
+              </span>
+
             </div>
 
-            <div style={{ fontSize: 12, color: "#999" }}>
-              Arrives {trainData.nextStation?.arrival_time?.toLocaleTimeString()}
+            {/* Previous + Next Station */}
+            <div style={{fontSize: 11, color: "#333"}}>
+
+                 Departed: <strong> {trainData.prevStation?.name ?? trainData.firstStation?.name} </strong>
             </div>
 
-            <div style={{ marginTop: 10, height: 4, width: "100%", background: "#e5e5e5", borderRadius: 999, overflow: "hidden" }}>
-              <div style={{ width: `${trainData.progress * 100}%`, height: "100%", background: "#1D9E75", borderRadius: 999 }} />
+
+            <div style={{ fontSize: 11, color: "#333", marginBottom: 2 }}>
+              Next: <strong> {trainData.nextStation?.name} </strong>
             </div>
+
+            <div style={{ fontSize: 16, color: "#333" }}>
+              Arrives: <strong> {trainData.nextStation?.arrival_time?.toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"})} </strong>
+            </div>
+
+            {/* Progress Bar with %  */}
+            <div> 
+
+              <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+                fontSize: 12,
+                color: "black",
+                marginBottom: 3
+              }}>
+                <span> </span>
+                <span> {Math.round(trainData.progress * 100)}% </span>
+              </div>
+
+              <div style={{ height: 4, width: "100%", background: "#e5e5e5", borderRadius: 999, overflow: "hidden" }}>
+                <div style={{ width: `${trainData.progress * 100}%`, height: "100%", background: "#1D9E75", borderRadius: 999 }} />
+              </div>
+              
+          
+            </div>
+
+            
 
           </div>
         );
       })}
 
-    {/* Upcoming section label */}
+    {/* Upcoming Trips */}
     <div style={{ fontSize: 14, letterSpacing: "0.08em", textTransform: "uppercase", color: "white", margin: "20px 0 8px" }}>
       <strong> 🕐 Upcoming Trips </strong>
     </div>
@@ -321,7 +353,7 @@ if (!stations.length) {
           }}>
 
               {/* Trip Info */}
-              <div>
+              <div style ={{width: "calc(100vw - 52px)"}}>
                 <div style={{ 
                   fontSize: 14, 
                   fontWeight: 500,
@@ -345,7 +377,7 @@ if (!stations.length) {
               </span>
               
               <div style={{ fontSize: 12, color: "#999", marginTop: 1 }}>
-                Departs {t.startTime.toLocaleTimeString()}
+                Departs {t.startTime.toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"})}
               </div>
             </div>
 
@@ -516,7 +548,7 @@ if (!stations.length) {
 
                   <div style={{marginBottom: 6}}> 
                     <span style={{opacity: 0.6}}> Arrives: </span>
-                      {trainData.nextStation?.arrival_time?.toLocaleTimeString()}
+                      {trainData.nextStation?.arrival_time?.toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"})}
                   </div>
 
                   <div style={{marginBottom: 6}}> 
