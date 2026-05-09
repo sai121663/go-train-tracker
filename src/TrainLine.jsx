@@ -6,7 +6,7 @@ import stops from "./data/JSON_GO_GTFS/stops.json";
 import trips from "./data/JSON_GO_GTFS/trips.json";
 
 
-const response = await fetch("public/stop_times_kitchener.json")
+const response = await fetch("/stop_times_kitchener.json")
 const stopTimes = await response.json();
 
 import {buildTrip, preprocessTrips, baseStations} from "./logic/buildTrip";
