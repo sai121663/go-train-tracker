@@ -1,6 +1,6 @@
 import kitchenerLine from "./assets/Kitchener-Line.png"
 import {useEffect, useState, useMemo, useRef} from "react"
-import {interpolatePosition, getCountdown} from "./logic/logic.js"
+import {interpolatePosition} from "./logic/logic.js"
 
 import {useTrainData} from "./hooks/useTrainData.js";
 
@@ -28,26 +28,9 @@ function TrainLine() {
 
     const [isPaused, setIsPaused] = useState(false);
     const [pausedTime, setPausedTime] = useState();
-
     const [hoveredTripId, setHoveredTripId] = useState(null);
-
     const [simulatedTime, setSimulatedTime] = useState(null);
-
     const [activeTrips, setActiveTrips] = useState([]);
-
-
-    // const [stopTimes, setStopTimes] = useState(null);
-
-    // // Fetching the data from the GTFS
-    // useEffect(() => {
-    //   fetch("src/data/JSON_GO_GTFS/stop_times.json")
-    //     .then(r => r.json())
-    //     .then(data => setStopTimes(data))
-    // }, []);
-
-    //
-
-    
 
     // Live Rendering
     const [time, setTime] = useState(new Date());
@@ -61,10 +44,7 @@ function TrainLine() {
     }, []); 
 
     
-
-    // const {stations, totalTripTime} = useTrainData(direction, startTime);
     const tripId = "20260423-GT-3036";
-
 
     // 1. Create a LOOK-UP map
     // Group all stop times by their trip ID (instant lookup)
@@ -117,9 +97,6 @@ function TrainLine() {
       return preprocessTrips(trips, stopTimesByTrip, stopsById, route_id);
     }, [stopTimesByTrip]);
 
-    console.log("tripsMeta", tripsMeta);
-    console.log("tripsMeta length", tripsMeta.length);
-
     // Set the STARTING time for the simulation
     useEffect(() => {
         setSimulatedTime(new Date());
@@ -151,7 +128,7 @@ function TrainLine() {
 
       // Transforms the current date into a string 
       // (avoids printing the same trip across multiple dates)
-      const currentDateString = 
+    const currentDateString = 
         simulatedTime.getFullYear().toString() +
         String(simulatedTime.getMonth() + 1).padStart(2, "0") +
         String(simulatedTime.getDate()).padStart(2, "0");
@@ -197,25 +174,7 @@ function TrainLine() {
         stations: getBuiltTrip(t.tripId)
       }));
     }, [activeTrips]);
-
-
-    const now = time;
-    const start = stations[0].arrival_time;
-    const end = stations[stations.length - 1].arrival_time;
-
-    let tripStatus;
-
-    if (now < start) {
-      tripStatus = "Scheduled";
-    } else if (now > end) {
-      tripStatus = "Finished";
-    } else {
-      tripStatus = "Live";
-    }
       
-/////
-const currentTime = new Date();
-
 const firstTrain = activeTripsData[0];
 const firstTrainData = firstTrain
       ? interpolatePosition(firstTrain.stations, simulatedTime)
@@ -231,8 +190,6 @@ const upcomingTrips = tripsMeta
       t.startTime > simulatedTime
     )
     .slice(0, 3);
-
-console.log("activeTripsData", activeTripsData);
 
 if (!stations.length) {
       return <div>Loading trip...</div>;

@@ -49,20 +49,3 @@ export function interpolatePosition(stations, time) {
         }
 }
 
-// Converts "Hour:Minutes" string to a date object
-export function getCountdown(arrivalTime, currTime) {
-    const diffMs = arrivalTime - currTime;
-
-    if (diffMs <= 0) {
-        return "Trip complete!";
-    }
-
-    if (isNaN(diffMs)) {
-        return "Trip is not live!";
-    }
-
-    const minutes = Math.floor(diffMs / 60000);
-    const seconds = Math.floor((diffMs % 60000) / 1000);
-
-    return `${minutes}:${seconds.toString().padStart(2, "0")} remaining`;
-}
